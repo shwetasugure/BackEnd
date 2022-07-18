@@ -37,6 +37,7 @@ exports.flyAshRawMatirial = async (req, res) => {
             }
         }
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             Message: "Something Went Wrong ...!"
         })
@@ -53,19 +54,20 @@ exports.getAllflyAshRawMatirial = async (req, res) => {
         delete req.query["limit"];
         const data = await flyAshRawMatirial.find(req.query)
             .limit(pageOptions.limit)
-            .skip(pageOptions.page * pageOptions.limit)
-        const totalCount = await flyAshRawMatirial.find(req.query)
-            .limit(pageOptions.limit)
-            .skip(pageOptions.page * pageOptions.limit).count()
+        const allData = await flyAshRawMatirial.find(req.query)
+        const totalCount = await flyAshRawMatirial.find(req.query).count()
         if (data) {
-            var sum = 0
+            var totalAmount = 0
+            var totalTon = 0
             if (totalCount > 0) {
-                sum = objSum(data, "amount")
+                totalAmount = objSum(allData, "amount")
+                totalTon = objSum(allData, "numberOfTon")
             }
             res.status(200).json({
                 data,
                 totalCount,
-                totalflyAshRawMatirial: sum
+                totalAmount: totalAmount,
+                totalTon: totalTon
             })
         }
     } catch (error) {

@@ -1,4 +1,4 @@
-const { objSum } = require("../common-function");
+const { objSum, arrayOfObjectfilter } = require("../common-function");
 const production = require("../models/production");
 
 exports.production = async (req, res) => {
@@ -53,18 +53,17 @@ exports.getAllProduction = async (req, res) => {
         const data = await production.find(req.query)
             .limit(pageOptions.limit)
             .skip(pageOptions.page * pageOptions.limit)
-        const totalCount = await production.find(req.query)
-            .limit(pageOptions.limit)
-            .skip(pageOptions.page * pageOptions.limit).count()
-        if (data) {
-            var sum = 0
+        const allData = await production.find(req.query)
+        const totalCount = await production.find(req.query).count()
+        if (data && allData) {
+            var totalProduction = 0
             if (totalCount > 0) {
-                sum = objSum(data, "quantity")
+                totalProduction = objSum(allData, "quantity")
             }
             res.status(200).json({
                 data,
                 totalCount,
-                totalProduction: sum
+                totalProduction
             })
         }
     } catch (error) {

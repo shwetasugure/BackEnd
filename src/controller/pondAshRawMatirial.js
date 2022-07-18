@@ -53,18 +53,20 @@ exports.getAllpondAshRawMatirial = async (req, res) => {
         const data = await pondAshRawMatirial.find(req.query)
             .limit(pageOptions.limit)
             .skip(pageOptions.page * pageOptions.limit)
-        const totalCount = await pondAshRawMatirial.find(req.query)
-            .limit(pageOptions.limit)
-            .skip(pageOptions.page * pageOptions.limit).count()
-        if (data) {
-            var sum = 0
+        const allData = await pondAshRawMatirial.find(req.query)
+        const totalCount = await pondAshRawMatirial.find(req.query).count()
+        if (data && allData) {
+            var totalTon = 0
+            var totalAmount = 0
             if (totalCount > 0) {
-                sum = objSum(data, "quantity")
+                totalTon = objSum(allData, "numberOfTon")
+                totalAmount = objSum(allData, "amount")
             }
             res.status(200).json({
                 data,
                 totalCount,
-                totalpondAshRawMatirial: sum
+                totalTon,
+                totalAmount
             })
         }
     } catch (error) {

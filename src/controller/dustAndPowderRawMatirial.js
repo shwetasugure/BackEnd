@@ -3,6 +3,7 @@ const dustAndPowderRawMatirial = require("../models/dustAndPowderRawMatirial");
 
 exports.dustAndPowderRawMatirial = async (req, res) => {
     try {
+        req.body.amount = req.body.quantity * req.body.pricePerQuantity
         const id = req.query.id
         const isExist = await dustAndPowderRawMatirial.findOne({ _id: id }).exec()
         if (isExist) {
@@ -53,18 +54,20 @@ exports.getAlldustAndPowderRawMatirial = async (req, res) => {
         const data = await dustAndPowderRawMatirial.find(req.query)
             .limit(pageOptions.limit)
             .skip(pageOptions.page * pageOptions.limit)
-        const totalCount = await dustAndPowderRawMatirial.find(req.query)
-            .limit(pageOptions.limit)
-            .skip(pageOptions.page * pageOptions.limit).count()
-        if (data) {
-            var sum = 0
+        const allData = await dustAndPowderRawMatirial.find(req.query)
+        const totalCount = await dustAndPowderRawMatirial.find(req.query).count()
+        if (data && allData) {
+            var totalTrip = 0
+            var totalaAmount = 0
             if (totalCount > 0) {
-                sum = objSum(data, "quantity")
+                totalTrip = objSum(allData, "quantity")
+                totalaAmount = objSum(allData, "amount")
             }
             res.status(200).json({
                 data,
                 totalCount,
-                totaldustAndPowderRawMatirial: sum
+                totalTrip: totalTrip,
+                totalaAmount: totalaAmount
             })
         }
     } catch (error) {

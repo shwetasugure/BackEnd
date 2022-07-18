@@ -1,33 +1,28 @@
 const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
     {
-        name: {
-            type: String,
+        date: {
+            type: Date,
             required: true,
         },
-        quantity: {
+        name: {
+            type: String,
+            required: true
+        },
+        noLiter: {
             type: Number,
             required: true
         },
-        quantityUnit: {
-            type: String,
-            required: true
-        },
-        rawMatirialType: {
-            type: String,
-            required: true
-
-        },
-        vehicalNumber: {
-            type: String,
-            required: true
-        },
-        pricePerQuantity: {
+        pricePerLiter: {
             type: Number,
             required: true
         },
-        Date: {
-            type: Date,
+        transportCharge: {
+            type: Number,
+            required: true
+        },
+        gstAmount: {
+            type: Number,
             required: true
         },
         amount: {
@@ -37,5 +32,4 @@ const userSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
-
-module.exports = mongoose.model("dustAndPowderRawMatirial", userSchema);
+module.exports = mongoose.model("chemicalRawMatirial", userSchema);

@@ -57,9 +57,7 @@ exports.getAllvehicalDetail = async (req, res) => {
         const data = await vehicalDetail.find(req.query)
             .limit(pageOptions.limit)
             .skip(pageOptions.page * pageOptions.limit)
-        const totalCount = await vehicalDetail.find(req.query)
-            .limit(pageOptions.limit)
-            .skip(pageOptions.page * pageOptions.limit).count()
+        const totalCount = await vehicalDetail.find(req.query).count()
         if (data) {
             res.status(200).json({
                 data,

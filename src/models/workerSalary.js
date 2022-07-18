@@ -5,27 +5,26 @@ const userSchema = new mongoose.Schema(
             type: Date,
             required: true,
         },
-        name: {
+        typeOfBrick: {
             type: String,
             required: true
         },
-        vehicalNumber: {
-            type: String,
-            required: true
-        },
-        numberOfTon: {
+        noOfPlates: {
             type: Number,
             required: true
+
         },
-        pricePerTon: {
+        pricePerPlate: {
             type: Number,
             required: true
         },
         amount: {
             type: Number,
             required: true
+
         }
     },
     { timestamps: true }
 );
-module.exports = mongoose.model("flyAshRawMatirial", userSchema);
+
+module.exports = mongoose.model("workerSalary", userSchema);

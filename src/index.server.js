@@ -13,6 +13,13 @@ const customerDetail = require('./routes/customerDetail')
 const vehicalDetail = require('./routes/vehicalDetail')
 const supplairDetail = require('./routes/supplairDetail')
 const dailyTransportDetail = require('./routes/dailyTransportDetail')
+const dustAndPowderRawMatirial = require('./routes/dustAndPowderRawMatirial')
+const cementRawMatirial = require('./routes/cementRawMatirial')
+const pondAshRawMatirial = require('./routes/pondAshRawMatirial')
+const flyAshRawMatirial = require('./routes/flyAshRawMatirial')
+const chemicalRawMatirial = require('./routes/chemicalRawMatirial')
+const workerSalary = require('./routes/workerSalary')
+const maintainesCost = require('./routes/maintainesCost')
 
 
 env.config();
@@ -37,6 +44,13 @@ app.use("/api", customerDetail);
 app.use("/api", vehicalDetail);
 app.use("/api", supplairDetail);
 app.use("/api", dailyTransportDetail);
+app.use("/api", dustAndPowderRawMatirial);
+app.use("/api", cementRawMatirial);
+app.use("/api", pondAshRawMatirial);
+app.use("/api", flyAshRawMatirial);
+app.use("/api", chemicalRawMatirial);
+app.use("/api", workerSalary);
+app.use("/api", maintainesCost);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);

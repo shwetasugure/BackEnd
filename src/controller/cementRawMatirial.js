@@ -3,7 +3,7 @@ const cementRawMatirial = require("../models/cementRawMatirial");
 
 exports.cementRawMatirial = async (req, res) => {
     try {
-        req.body.amount = req.body.pricePerBag * req.body.quantity
+        req.body.amount = (req.body.pricePerBag * req.body.quantity) + req.body.transportCharge
         const id = req.query.id
         const isExist = await cementRawMatirial.findOne({ _id: id }).exec()
         if (isExist) {
@@ -54,18 +54,23 @@ exports.getAllcementRawMatirial = async (req, res) => {
         const data = await cementRawMatirial.find(req.query)
             .limit(pageOptions.limit)
             .skip(pageOptions.page * pageOptions.limit)
-        const totalCount = await cementRawMatirial.find(req.query)
-            .limit(pageOptions.limit)
-            .skip(pageOptions.page * pageOptions.limit).count()
-        if (data) {
-            var sum = 0
+        const allData = await cementRawMatirial.find(req.query)
+        const totalCount = await cementRawMatirial.find(req.query).count()
+        var bagSum = 0
+        var tonSum = 0
+        var amount = 0
+        if (data && allData) {
             if (totalCount > 0) {
-                sum = objSum(data, "quantity")
+                bagSum = objSum(allData, "quantity")
+                tonSum = objSum(allData, "numberOfTon")
+                amount = objSum(allData, "amount")
             }
             res.status(200).json({
                 data,
                 totalCount,
-                totalcementRawMatirial: sum
+                totalBag: bagSum,
+                totalTon: tonSum,
+                totalSum: amount
             })
         }
     } catch (error) {

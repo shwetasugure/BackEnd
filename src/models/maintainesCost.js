@@ -5,20 +5,12 @@ const userSchema = new mongoose.Schema(
             type: Date,
             required: true,
         },
-        name: {
+        type: {
             type: String,
             required: true
         },
-        vehicalNumber: {
+        Resion: {
             type: String,
-            required: true
-        },
-        numberOfTon: {
-            type: Number,
-            required: true
-        },
-        pricePerTon: {
-            type: Number,
             required: true
         },
         amount: {
@@ -28,4 +20,4 @@ const userSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
-module.exports = mongoose.model("flyAshRawMatirial", userSchema);
+module.exports = mongoose.model("maintainesCost", userSchema);
