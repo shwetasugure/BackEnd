@@ -1,8 +1,10 @@
+const moment = require("moment/moment");
 const { objSum, arrayOfObjectfilter } = require("../common-function");
 const production = require("../models/production");
 
 exports.production = async (req, res) => {
     try {
+        req.body.date = new Date(moment(req?.body?.date).format("YYYY-MM-DD"))
         const id = req.query.id
         const isExist = await production.findOne({ _id: id }).exec()
         if (isExist) {
@@ -36,6 +38,7 @@ exports.production = async (req, res) => {
             }
         }
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             Message: "Something Went Wrong ...!"
         })
@@ -50,6 +53,11 @@ exports.getAllProduction = async (req, res) => {
         }
         delete req.query["page"];
         delete req.query["limit"];
+        const startDate = new Date(moment(req?.query?.startDate).format("YYYY-MM-DD"))
+        const endDate = new Date(moment(req?.query?.endDate).format("YYYY-MM-DD"))
+        req.query["date"] = { $gte: startDate, $lte: endDate }
+        delete req.query["startDate"];
+        delete req.query["endDate"];
         const data = await production.find(req.query)
             .limit(pageOptions.limit)
             .skip(pageOptions.page * pageOptions.limit)
