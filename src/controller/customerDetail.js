@@ -6,8 +6,8 @@ exports.customerDetail = async (req, res) => {
   try {
     const id = req.query.id;
     const isExist = await customerDetail.findOne({ _id: id }).exec();
-    if (phoneNumber(req.body.conatctNumber) === false)
-      return res.status(500).json({ Message: "Invalied Phone Number...!" });
+    // if (phoneNumber(req.body.contactNumber) === false)
+    //   return res.status(500).json({ Message: "Invalied Phone Number...!" });
     if (isExist) {
       var myquery = { _id: id };
       var newvalues = {
@@ -35,6 +35,55 @@ exports.customerDetail = async (req, res) => {
           Message: "Failed to Create a Data...!",
         });
       }
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      Message: "Something Went Wrong ...!",
+    });
+  }
+};
+exports.customerAddressDetail = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const action = req.query.action;
+    let resp = await customerDetail.findOne({ _id: id }).exec();
+    let updatedData = resp;
+    const updatedAddress = {
+      address: req.body.address,
+      price: req.body.price,
+    };
+    if (action === "create") {
+      updatedData?.address.push(updatedAddress);
+    } else if (action === "update") {
+      const indexOfObject = updatedData?.address.findIndex(
+        (x) => x.address === req.body.address
+      );
+      updatedData?.address.pop(indexOfObject);
+      updatedData?.address.push(updatedAddress);
+    } else if (action === "delete") {
+      const indexOfObject = updatedData?.address.findIndex(
+        (x) => x.address === req.body.address
+      );
+      updatedData?.address.pop(indexOfObject);
+    } else {
+      res.status(500).json({
+        Message: "Invalied Event...!",
+      });
+    }
+    var myquery = { _id: id };
+    var newvalues = {
+      $set: updatedData,
+    };
+    const data = await customerDetail.updateOne(myquery, newvalues).exec();
+    if (data.nModified === 1) {
+      res.status(200).json({
+        Message: "Requested Data Is Successfully Updated...!",
+      });
+    } else {
+      res.status(500).json({
+        Message: "Failed to Update the Data...!",
+      });
     }
   } catch (error) {
     console.log(error);

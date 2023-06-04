@@ -27,10 +27,10 @@ exports.production = async (req, res) => {
       const data = await _production.save();
       if (data) {
         res.status(200).json({
-          data,
+          Message: "Requested Data Is Successfully Created...!",
         });
       } else {
-        res.status(data).json({
+        res.status(500).json({
           Message: "Failed to Create a Data...!",
         });
       }

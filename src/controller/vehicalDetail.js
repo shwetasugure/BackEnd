@@ -4,9 +4,10 @@ const moment = require("moment/moment");
 
 exports.vehicalDetail = async (req, res) => {
   try {
+    console.log(req.body);
     const id = req.query.id;
     const isExist = await vehicalDetail.findOne({ _id: id }).exec();
-    if (phoneNumber(req.body.conatctNumber) === false)
+    if (phoneNumber(req.body.contactNumber) === false)
       return res.status(500).json({ Message: "Invalied Phone Number...!" });
     if (isExist) {
       var myquery = { _id: id };

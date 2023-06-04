@@ -25,36 +25,26 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    saleDetail: {
-      fourInch: {
+    saleDetail: [
+      {
+        brickName: {
+          type: String,
+          required: true,
+        },
         quantity: {
           type: Number,
-          required: false,
+          required: true,
         },
         rate: {
           type: Number,
-          required: false,
+          required: true,
         },
         amount: {
           type: Number,
-          required: false,
+          required: true,
         },
       },
-      sixInch: {
-        quantity: {
-          type: Number,
-          required: false,
-        },
-        rate: {
-          type: Number,
-          required: false,
-        },
-        amount: {
-          type: Number,
-          required: false,
-        },
-      },
-    },
+    ],
   },
   { timestamps: true }
 );

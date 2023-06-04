@@ -9,11 +9,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    vehicalType: {
+    vehicleType: {
       type: String,
       required: true,
     },
-    vehicalNumber: {
+    vehicleNumber: {
       type: String,
       required: true,
     },
@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    conatctNumber: {
+    contactNumber: {
       type: String,
       required: true,
     },

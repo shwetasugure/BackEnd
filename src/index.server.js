@@ -27,7 +27,7 @@ mongoose.connect(`mongodb://localhost/${process.env.MONGO_DB_DATABASE}`, {
   useUnifiedTopology: true,
   useCreateIndex: true,
 });
-var connect = mongoose.connection
+mongoose.connection
   .once("open", function () {
     console.log("Database Connected");
   })
@@ -54,6 +54,6 @@ app.use("/api", workerSalary);
 app.use("/api", maintainesCost);
 app.use("/api", sale);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
